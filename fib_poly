@@ -1,0 +1,24 @@
+# This code demonstrates our algebraic approach to fibonacci polynomials.
+# Prints the first n Fibonacci polynomials with both positive and negative index
+# validates F_n(x)=(-1)^{n-1}F_{-n}(x)
+# validates F_n(x) is odd (resp. even) polynomial is n is even (resp. odd)
+# We also show that the fibonacci polnomial of index n and -n are inverse of each other modulo a polynomial
+
+
+def print_fib(n):
+    P.<x,y>=QQ['x','y']
+    g=P(y)
+    h=P(y)
+    for k in range(n):
+        print(str(k)+"th positive and negative index Fibonacci numbers are ",g(1,0),h(1,0))
+        print(str(k)+"th positive and negative index Fibonacci polynomials are ",g(x,0),h(x,0))
+        print("Checking the identity:", g(x,0)==h(-x,0))
+        c=(g(x,y)*h(x,y))%P(-y^2-x*y+1)
+        print("Multiplication mod (-y^2-x*y+1) and setting y=0:", c)
+        print("\n")
+        f=g*P(x+y)
+        g=f%P(-y^2-x*y+1)
+        b=h*P(y)
+        h=b%P(-y^2-x*y+1)
+
+print_fib(4)
